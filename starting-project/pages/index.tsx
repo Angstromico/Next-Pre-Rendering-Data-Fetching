@@ -1,8 +1,9 @@
 export default function Home() {
   return (
-    <div>
-      <h1>Welcome to the Next.js Course (TypeScript Mode)</h1>
-      <p>This is the starting project.</p>
-    </div>
+    <ul>
+      <li>Product 1</li>
+      <li>Product 2</li>
+      <li>Product 3</li>
+    </ul>
   )
 }
