@@ -1,20 +1,31 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import path from 'path'
+import fs from 'fs/promises'
+import { title } from 'process'
 
 // 1. Define the internal data structure
 type Product = {
-  id: number
-  name: string
+  id: string
+  title: string
+  description: string
+}
+
+interface Data {
+  products: Product[]
 }
 
 // 2. Use GetStaticProps to type the function
 export const getStaticProps: GetStaticProps<{
   products: Product[]
 }> = async () => {
-  const products: Product[] = [{ id: 1, name: 'Product 1' }]
+  const filePatch = path.join(process.cwd(), 'data', 'dummy-backend.json')
+  console.log('filePatch', filePatch)
+  const jsonData = await fs.readFile(filePatch, 'utf-8')
+  const data: Data | undefined = JSON.parse(jsonData)
 
   return {
     props: {
-      products,
+      products: data.products || [],
     },
   }
 }
@@ -26,7 +37,10 @@ export default function Home({
   return (
     <ul>
       {products.map((product) => (
-        <li key={product.id}>{product.name}</li>
+        <li key={product.id}>
+          <h3>{product.title}</h3>
+          <p>{product.description}</p>
+        </li>
       ))}
     </ul>
   )
