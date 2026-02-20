@@ -27,6 +27,7 @@ export const getStaticProps: GetStaticProps<{
     props: {
       products: data.products || [],
     },
+    revalidate: 1000,
   }
 }
 
