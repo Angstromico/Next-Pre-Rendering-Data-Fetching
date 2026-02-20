@@ -25,13 +25,9 @@ export default function Home({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <ul>
-      {products.map(
-        (
-          product, //Cannot read properties of undefined (reading 'map')
-        ) => (
-          <li key={product.id}>{product.name}</li>
-        ),
-      )}
+      {products.map((product) => (
+        <li key={product.id}>{product.name}</li>
+      ))}
     </ul>
   )
 }
