@@ -1,6 +1,6 @@
 import type {User} from '../../models'
 
-const UserProfile = (props: { user: User }) => {
+const UserProfiles = (props: { user: User }) => {
   const { user } = props
   return (
     <div>
@@ -10,7 +10,7 @@ const UserProfile = (props: { user: User }) => {
   )
 }
 
-export default UserProfile
+export default UserProfiles
 
 export async function getServerSideProps(context: { params: { id: string } }): Promise<{ props: { user: User } }> {
   const { params } = context
