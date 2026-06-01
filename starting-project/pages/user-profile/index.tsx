@@ -1,30 +1,31 @@
 import { GetServerSideProps } from "next";
-import type { User } from "../../models"
+import Link from "next/link";
+import type { User } from "../../models";
 
-const UserProfile = ({ user }: { user: User }) => {
+const UserList = ({ users }: { users: User[] }) => {
   return (
-   <>
-    <h1>{user.name}</h1>
-    <p>{user.email}</p>
-   </>   
-  )
-}
+    <>
+      <h1>User Profiles</h1>
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>
+            <Link href={`/user-profile/${user.id}`}>{user.name}</Link>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
 
-export default UserProfile
-
+export default UserList;
 
 export const getServerSideProps: GetServerSideProps<{
-  user: User;
-}> = async (context) => {
-
-  // Example fetch (replace with your real logic)
-  const user: User = {
-    id: '5',
-    name: "John Doe",
-    email: "john.doe@example.com"
-  };
+  users: User[];
+}> = async () => {
+  const res = await fetch("https://jsonplaceholder.typicode.com/users");
+  const users: User[] = await res.json();
 
   return {
-    props: { user },
+    props: { users },
   };
 };

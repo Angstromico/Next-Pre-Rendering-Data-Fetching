@@ -1,26 +1,44 @@
-import type {User} from '../../models'
+import { GetServerSideProps } from "next";
+import Link from "next/link";
+import type { User } from "../../models";
 
-const UserProfiles = (props: { user: User }) => {
-  const { user } = props
+const UserProfile = (props: { user: User }) => {
+  const { user } = props;
+
+  if (!user || !user.name) {
+    return <p>User not found.</p>;
+  }
+
   return (
     <div>
+      <Link href="/user-profile">← Back to Users</Link>
       <h1>{user.name}</h1>
-      <p>{user.email}</p>
+      <p><strong>Email:</strong> {user.email}</p>
     </div>
-  )
-}
+  );
+};
 
-export default UserProfiles
+export default UserProfile;
 
-export async function getServerSideProps(context: { params: { id: string } }): Promise<{ props: { user: User } }> {
-  const { params } = context
-  const res = await fetch(`https://jsonplaceholder.typicode.com/users/${params.id}`) 
-  
-  const userData: User = await res.json()
-  
+export const getServerSideProps: GetServerSideProps<{
+  user: User;
+}> = async (context) => {
+  const { params } = context;
+  const id = params?.id;
+
+  const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+
+  if (!res.ok) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const userData: User = await res.json();
+
   return {
     props: {
-      user: userData
-     }
-  }
-}
+      user: userData,
+    },
+  };
+};
