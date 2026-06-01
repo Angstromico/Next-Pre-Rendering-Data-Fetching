@@ -1,7 +1,8 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import path from 'path'
 import fs from 'fs/promises'
-import type { Data, Product } from './interfaces'
+import Link from 'next/link'
+import type { Data, Product } from '../models'
 
 // 1. Use GetStaticProps to type the function
 export const getStaticProps: GetStaticProps<{
@@ -28,8 +29,7 @@ export default function Home({
     <ul>
       {products.map((product) => (
         <li key={product.id}>
-          <h3>{product.title}</h3>
-          <p>{product.description}</p>
+          <Link href={`/${product.id}`}>{product.title}</Link>
         </li>
       ))}
     </ul>
