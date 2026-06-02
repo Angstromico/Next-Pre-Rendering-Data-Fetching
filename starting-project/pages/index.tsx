@@ -26,12 +26,15 @@ export default function Home({
   products = [],
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <ul>
+    <main>
+      <ul>
       {products.map((product) => (
         <li key={product.id}>
           <Link href={`/${product.id}`}>{product.title}</Link>
         </li>
       ))}
     </ul>
+    <p><Link href="/user-profile">View Users Profile</Link></p>
+    </main>
   )
 }
