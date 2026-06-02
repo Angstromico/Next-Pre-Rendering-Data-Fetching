@@ -35,6 +35,7 @@ export default function Home({
       ))}
     </ul>
     <p><Link href="/user-profile">View Users Profile</Link></p>
+    <p><Link href="/last-sales">View Last Sales</Link></p>
     </main>
   )
 }
